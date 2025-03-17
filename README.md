@@ -1,5 +1,14 @@
 # flight-data 분석 과제
 
+### 환경 설정하기
+
+```bash
+git remote add upstream https://github.com/k1minchae/flight-data.git
+git remote -v
+git fetch upstream
+git merge upstream/main
+```
+
 LS빅데이터스쿨 4기 flight-data 분석 실습 과제
 
 **팀원: 권서연, 김민채, 박재원, 오상원**
@@ -22,10 +31,13 @@ LS빅데이터스쿨 4기 flight-data 분석 실습 과제
 
 - 시간대별 지연 패턴 확인
 - 날씨별 지연 패턴 확인
+- 계절별 지연 패턴 확인
+- 좌석 수와의 상관 관계 확인
 
 3️⃣ 항공기 특성 분석
 
 - 엔진개수의 선호도 분석
+- 엔진개수별 항공기 특성 분석
 
 4️⃣ 추가 인사이트 도출
 
