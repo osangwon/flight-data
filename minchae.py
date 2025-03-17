@@ -63,20 +63,24 @@ wind_gust_median = flights_weather['wind_gust'].median()
 wind_speed_median = flights_weather['visib'].median()
 visib_median = flights_weather['wind_speed'].median()
 
+# 사분위수 계산
+q1_gust, q3_gust = flights_weather['wind_gust'].quantile([0.25, 0.75])
+q1_speed, q3_speed = flights_weather['wind_speed'].quantile([0.25, 0.75])
+q1_visib, q3_visib = flights_weather['visib'].quantile([0.25, 0.75])
 
- # 조건 설정: 돌풍이 중앙값 이상, 바람 속도가 중앙값 이상, 가시거리가 중앙값 이하인 경우
+# 날씨가 나쁜 경우 (상위 25%의 돌풍 & 바람 속도, 하위 25%의 가시거리)
 bad_weather = flights_weather.loc[
-    (flights_weather['wind_gust'] >= wind_gust_median) &
-    (flights_weather['wind_speed'] >= wind_speed_median) &
-    (flights_weather['visib'] <= visib_median)
-, :]
+    (flights_weather['wind_gust'] >= q3_gust) &
+    (flights_weather['wind_speed'] >= q3_speed) &
+    (flights_weather['visib'] <= q1_visib)
+]
 
-cond1 = flights_weather['wind_gust'] < wind_gust_median
-cond2 = flights_weather['wind_speed'] < wind_speed_median
-cond3 = flights_weather['visib'] > visib_median
-
-good_weather = flights_weather[(cond1.astype(int) + cond2.astype(int) + cond3.astype(int)) >= 2]
-
+# 날씨가 좋은 경우 (하위 25%의 돌풍 & 바람 속도, 상위 25%의 가시거리)
+good_weather = flights_weather.loc[
+    (flights_weather['wind_gust'] <= q1_gust) &
+    (flights_weather['wind_speed'] <= q1_speed) &
+    (flights_weather['visib'] >= q3_visib)
+]
 
 x = ['bad weather', 'good weather']
 y = [np.nanmean(bad_weather['dep_delay']), np.nanmean(good_weather['dep_delay'])]
