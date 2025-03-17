@@ -37,10 +37,24 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="fullcontent">
+<body>
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#데이터-확인" id="toc-데이터-확인" class="nav-link active" data-scroll-target="#데이터-확인">1. 데이터 확인</a>
+  <ul class="collapse">
+  <li><a href="#flights" id="toc-flights" class="nav-link" data-scroll-target="#flights">1. flights</a></li>
+  <li><a href="#planes" id="toc-planes" class="nav-link" data-scroll-target="#planes">2. planes</a></li>
+  <li><a href="#weather" id="toc-weather" class="nav-link" data-scroll-target="#weather">3. weather</a></li>
+  </ul></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section">2.</a></li>
+  </ul>
+</nav>
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -71,6 +85,12 @@ ul.task-list li input[type="checkbox"] {
 <section id="데이터-확인" class="level2">
 <h2 class="anchored" data-anchor-id="데이터-확인">1. 데이터 확인</h2>
 <p><img src="https://docs.ropensci.org/dittodb/articles/relational-nycflights.svg" class="img-fluid"></p>
+<p>이 데이터는 2013년 뉴욕에서 출발한 모든 항공편의 운항 데이터로 구성되어 있으며, 항공사, 공항, 날씨, 항공기에 대한 메타데이터를 포함하고 있습니다. 저희는 flight, plane, weather 데이터를 중심으로 항공 운항과 관련된 다양한 패턴을 분석하고자 합니다.</p>
+<p><br></p>
+<details>
+<summary>
+데이터 자세히 보기/닫기
+</summary>
 <section id="flights" class="level3">
 <h3 class="anchored" data-anchor-id="flights">1. flights</h3>
 <table class="caption-top table">
@@ -223,7 +243,7 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><code>origin</code></td>
-<td>데이터가 수집된 지역 또는 공항 코드</td>
+<td>공항 코드</td>
 </tr>
 <tr class="even">
 <td><code>year</code></td>
@@ -283,8 +303,12 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-<p><br> <br></p>
+</section></details>
+<p><br></p>
 </section>
+
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section">2.</h2>
 </section>
 
 </main>
