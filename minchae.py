@@ -3,14 +3,6 @@ import seaborn as sns
 import numpy as np
 import pandas as pd
 
-# 비행기 데이터 분석 실습
-from nycflights13 import flights, planes
-
-# 데이터 확인
-flights.info()
-planes.info()
-flights.head()
-planes.head()
 
 '''
 Merge 사용해서 flights 와 planes 병합한 데이터로
@@ -19,6 +11,93 @@ Merge 사용해서 flights 와 planes 병합한 데이터로
 문자열 전처리 코드 들어갈 것
 시각화 종류 최소 3개 (배우지 않은것도 OK)
 '''
+
+# 데이터 불러오기
+from nycflights13 import flights, planes, weather
+
+# 데이터 확인
+flights.info()
+planes.info()
+flights.head()
+planes.head()
+weather.head()
+weather.info()
+
+# 전처리 (형변환)
+weather['time_hour'] = pd.to_datetime(weather['time_hour'])
+
+weather['origin'].unique() # 'EWR', 'JFK', 'LGA'
+'''
+EWR: 뉴어크 리버티 국제공항
+JFK: 존 F. 케네디 국제공항
+LGA: 라과디아 공항
+'''
+
+flights_weather = pd.merge(flights, weather, on=['year', 'month', 'day', 'hour', 'origin'], how='inner')
+flights_weather.isna().sum()
+
+# 결측치 제거
+flights_weather = flights_weather.loc[~((flights_weather['dep_delay'].isna()) & (flights_weather['arr_delay'].isna())), :]
+
+# 공항 이름 추가
+def replace_airport_code(row):
+    if row == 'EWR':
+        return 'Newark Liberty International Airport'
+    if row == 'JFK':
+        return 'John F. Kennedy International Airport'
+    if row == 'LGA':
+        return 'LaGuardia Airport'
+    return 'Unknown'
+
+# 공항 이름 추가 적용
+flights_weather['airport'] = flights_weather['origin'].apply(replace_airport_code)
+
+
+# 공항별 날씨 데이터
+weather_EWR = weather.loc[weather['origin'] == 'EWR', :]
+weather_JFK = weather.loc[weather['origin'] == 'JFK', :]
+weather_LGA = weather.loc[weather['origin'] == 'LGA', :]
+
+# 중앙값 구하기
+wind_gust_median = flights_weather['wind_gust'].median()
+wind_speed_median = flights_weather['visib'].median()
+visib_median = flights_weather['wind_speed'].median()
+
+
+ # 조건 설정: 돌풍이 중앙값 이상, 바람 속도가 중앙값 이상, 가시거리가 중앙값 이하인 경우
+bad_weather = flights_weather.loc[
+    (flights_weather['wind_gust'] >= wind_gust_median) &
+    (flights_weather['wind_speed'] >= wind_speed_median) &
+    (flights_weather['visib'] <= visib_median)
+, :]
+
+cond1 = flights_weather['wind_gust'] < wind_gust_median
+cond2 = flights_weather['wind_speed'] < wind_speed_median
+cond3 = flights_weather['visib'] > visib_median
+
+good_weather = flights_weather[(cond1.astype(int) + cond2.astype(int) + cond3.astype(int)) >= 2]
+
+
+x = ['bad weather', 'good weather']
+y = [np.nanmean(bad_weather['dep_delay']), np.nanmean(good_weather['dep_delay'])]
+# 막대그래프 그리기
+plt.figure(figsize=(6, 4))
+plt.bar(x, y, color=['red', 'blue'], alpha=0.7, edgecolor='black')
+
+# 그래프 스타일 개선
+plt.xlabel("Weather Condition")
+plt.ylabel("Average Departure Delay (minutes)")
+plt.title("Impact of Weather on Departure Delay")
+plt.ylim(0, max(y) * 1.2)  # Y축 범위를 최대값 기준으로 설정
+plt.grid(axis='y', linestyle='--', alpha=0.6)
+
+# 그래프 출력
+plt.show()
+
+
+# 날씨 데이터 시각화
+plt.figure(figsize=(12, 5))
+sns.scatterplot(flights_weather, x='visib', y='arr_delay', hue='origin')
 
 # 데이터 특성 확인
 planes['type'].unique() # 'Fixed wing multi engine', 'Fixed wing single engine','Rotorcraft'
