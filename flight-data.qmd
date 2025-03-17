@@ -1,0 +1,91 @@
+---
+title: "비행기 데이터 분석"
+format:
+  html:
+    code-fold: false
+    lang: ko
+    toc: true
+jupyter: python3
+---
+
+<br>
+
+![](https://bsmedia.business-standard.com/_media/bs/img/article/2024-08/07/full/1722995892-9811.jpg?im=FeatureCrop,size=(826,465))
+
+<p align="center">**팀원: 권서연, 김민채, 박재원, 오상원**</p>
+
+<br>
+<br>
+
+
+## 1. 데이터 확인
+
+![](https://docs.ropensci.org/dittodb/articles/relational-nycflights.svg)
+
+### 1. flights
+
+| 컬럼명            | 설명 |
+|------------------|------------------------------------------------|
+| `year`          | 연도  |
+| `month`         | 월  |
+| `day`           | 일  |
+| `dep_time`      | 실제 출발 시간 |
+| `sched_dep_time`| 예정된 출발 시간  |
+| `dep_delay`     | 출발 지연 시간 (분 단위, 음수이면 조기 출발) |
+| `arr_time`      | 실제 도착 시간 |
+| `sched_arr_time`| 예정된 도착 시간 |
+| `arr_delay`     | 도착 지연 시간 (분 단위, 음수이면 조기 도착) |
+| `carrier`       | 항공사 코드  |
+| `flight`        | 항공편 번호 |
+| `tailnum`       | 항공기 등록 번호  |
+| `origin`        | 출발 공항 코드  |
+| `dest`          | 도착 공항 코드  |
+| `air_time`      | 실제 비행 시간 (분 단위) |
+| `distance`      | 출발지와 목적지 간 거리 (마일 단위) |
+| `hour`          | 출발 예정 시간의 시각  |
+| `minute`        | 출발 예정 시간의 분  |
+| `time_hour`     | 항공편의 출발 예정 날짜와 시간 |
+
+<br>
+
+### 2. planes
+
+| 컬럼명        | 설명 |
+|--------------|------------------------------------------------|
+| `tailnum`    | 항공기 등록 번호  |
+| `year`       | 항공기 제작 연도 |
+| `type`       | 항공기 유형  |
+| `manufacturer` | 항공기 제조사  |
+| `model`      | 항공기 모델명  |
+| `engines`    | 엔진 개수 |
+| `seats`      | 좌석 수 |
+| `speed`      | 순항 속도  |
+| `engine`     | 엔진 유형  |
+
+<br>
+
+### 3. weather
+
+| 컬럼명       | 설명 |
+|-------------|------------------------------------------------|
+| `origin`    | 데이터가 수집된 지역 또는 공항 코드  |
+| `year`      | 연도 |
+| `month`     | 월  |
+| `day`       | 일  |
+| `hour`      | 시간  |
+| `temp`      | 기온  |
+| `dewp`      | 이슬점 온도  |
+| `humid`     | 상대 습도  |
+| `wind_dir`  | 풍향  |
+| `wind_speed`| 풍속  |
+| `wind_gust` | 돌풍 속도  |
+| `precip`    | 강수량  |
+| `pressure`  | 기압  |
+| `visib`     | 가시거리 |
+| `time_hour`  | 해당 시간의 타임스탬프  |
+
+
+<br>
+<br>
+
+## 2. 
