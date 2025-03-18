@@ -220,24 +220,26 @@ plt.title('delay by time')
 
 # 연쇄지연 여부 분석
 # 출발 시간 기준으로 정렬
-sorted_flight = nycflights.sort_values(['year','month', 'day', 'dep_time'], ascending=True)
-sorted_flight = sorted_flight.fillna(0)
+
+nycflights = nycflights.dropna(subset=['arr_time', 'dep_time'])
+sorted_flight = nycflights.sort_values(['year','month', 'day', 'hour', 'minute'], ascending=True)
 
 # 같은 날, 이전 시간에 출발한 항공편의 도착 지연 정보 추가
 sorted_flight['prev_arr_delay'] = sorted_flight.groupby(['year', 'month', 'day'])['arr_delay'].shift(1)
 sorted_flight['prev_arr_delay']
 
 # 연쇄 지연 여부 분석 (이전 항공편의 도착 지연이 현재 항공편의 출발 지연에 영향을 주었는지)
-delay_cnt = len(sorted_flight.loc[sorted_flight['dep_delay'] >= 15, :]) # 72914
+delay_cnt = len(sorted_flight.loc[sorted_flight['dep_delay'] >= 15, :]) # 72661
+cascade_delay_cnt = len(sorted_flight.loc[(sorted_flight['dep_delay'] >= 15) & (sorted_flight['prev_arr_delay'] >= 15), :]) # 33240
 
 next_delay_morning = len(sorted_flight.loc[(sorted_flight['time_of_day'] == 'morning') & (sorted_flight['dep_delay'] >= 15) & (sorted_flight['prev_arr_delay'] >= 15), :])
 next_delay_dawn = len(sorted_flight.loc[(sorted_flight['time_of_day'] == 'dawn') & (sorted_flight['dep_delay'] >= 15) & (sorted_flight['prev_arr_delay'] >= 15), :])
 next_delay_lunch = len(sorted_flight.loc[(sorted_flight['time_of_day'] == 'lunch') & (sorted_flight['dep_delay'] >= 15) & (sorted_flight['prev_arr_delay'] >= 15), :])
 next_delay_dinner = len(sorted_flight.loc[(sorted_flight['time_of_day'] == 'dinner') & (sorted_flight['dep_delay'] >= 15) & (sorted_flight['prev_arr_delay'] >= 15), :])
 
-labels = ['dawn', 'morning', 'lunch', 'dinner']
-sizes = [next_delay_dawn, next_delay_morning, next_delay_lunch, next_delay_dinner]
-colors = ["#FF9999", "#66B2FF", "#99FF99", "#FFCC99"]
+labels = ['cascade O', 'cascade X']
+sizes = [cascade_delay_cnt, delay_cnt - cascade_delay_cnt]
+colors = ["#FF9999", "#66B2FF"]
 
 # 파이 차트 그리기
 plt.figure(figsize=(7, 7))
