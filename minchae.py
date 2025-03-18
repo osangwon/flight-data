@@ -188,7 +188,7 @@ def divide_hour(hour):
         return 'dinner'
     return 'dawn'
 
-# 시간대 나눈 것을 열에 추가
+
 nycflights['time_of_day'] = nycflights['hour'].apply(divide_hour)
 
 # 시각화: 시간대 별로 항공편수가 몇개있는지
@@ -243,7 +243,7 @@ colors = ["#FF9999", "#66B2FF"]
 
 # 파이 차트 그리기
 plt.figure(figsize=(7, 7))
-plt.pie(sizes, labels=labels, autopct="%1.1f%%", startangle=90, colors=colors, wedgeprops={"edgecolor": "black"})
+plt.pie(sizes, labels=labels, autopct="%1.1f%%", startangle=90, colors=colors, wedgeprops={"edgecolor": "#1f2937"})
 plt.title("cascade delay")
 
 

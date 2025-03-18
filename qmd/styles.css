@@ -96,9 +96,7 @@
 body,
 div,
 section,
-p,
 a,
-span,
 input,
 button,
 select,
@@ -106,6 +104,22 @@ option,
 label,
 textarea {
   font-family: "Pretendard";
+  color: #1f2937;
+}
+
+code {
+  color: #dc2626 !important;
+  background-color: #ffffff !important;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 0.5rem;
+}
+
+p {
+  font-family: "Pretendard";
+  font-size: 18px;
+  color: #1f2937;
+  padding-top: 1rem;
 }
 
 h1,
@@ -114,18 +128,30 @@ h3,
 h4,
 h5,
 h6 {
+  color: #1f2937 !important;
   font-family: "Cafe24Ssurround" !important;
-  padding-bottom: 10px;
+  padding-bottom: 1rem;
+  padding-top: 3rem;
 }
 
 ul,
 li {
   font-family: "Cafe24Ssurround" !important;
   font-size: 30px;
+  color: #1f2937;
 }
 
 ul {
   padding-top: 10px;
+  color: #1f2937;
+}
+
+.code-fold {
+  font-size: 22px !important;
+}
+
+code span {
+  font-size: 20px !important;
 }
 
 /* 첫장 타이틀 */
@@ -166,7 +192,10 @@ ul {
   animation: bounce-in-top 2s both;
 }
 
-/* 맨 위 타이틀 */
+.padding-w {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
 
 /* 애니매이션 */
 @-webkit-keyframes bounce-in-top {

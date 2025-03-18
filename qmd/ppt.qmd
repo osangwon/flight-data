@@ -4,82 +4,158 @@ subtitle: "권서연, 김민채, 박재원, 오상원"
 author: "7조"
 format: 
   revealjs:
+    highlight-style: gruvbox
+    incremental: true  
     # logo: logo.png
     css: styles.css
     title-slide-attributes: 
       data-background-image: "assets/title-bg.gif"
       data-background-size: cover
+    slide-attributes:
+      data-background-image: "assets/bg.png"
+      data-background-size: cover
 jupyter: python3
 ---
 
+--- 
+
+## 목차 {data-background-image="assets/bg.png"}
+<div style="padding-left: 3rem !important;">
+
+::: {.incremental}
+1. 데이터 설명  
+2. 분석 목표  
+3. 항공편 지연 분석  
+   - 시간대별  
+   - 계절별  
+   - 날씨별  
+4. 항공기 특성 분석  
+   - 엔진 개수에 따른 특수성  
+   - 생산 년도와 엔진 개수  
+
+:::
+</div>
+
 ---
 
-## 목차
 
-1. 데이터 설명
-2. 분석 목표
-3. 항공편 지연 분석
-   - 시간대별
-   - 계절별
-   - 날씨별
-4. 항공기 특성 분석
-   - 엔진 개수에 따른 특수성
-   - 생산 년도와 엔진 개수
+## 데이터셋 정보 {data-background-image="assets/bg.png"}
 
----
+```{python}
 
-
-## 기본 정보
-
-* 다음과 같이 비행장 데이터 'flights, planes를 불러오겠습니다.
-
-```python
+import matplotlib.pyplot as plt
+import seaborn as sns
 import numpy as np
 import pandas as pd
-import nycflights13 import flights, planes
-
-flghts.info()
-planes.info()
-
+from nycflights13 import flights, planes, weather
 ```
 
+![](https://docs.ropensci.org/dittodb/articles/relational-nycflights.svg)
+
+<div style="margin-top: 1rem; padding-left: 1rem; padding-bottom: 1.6rem;">
+  <li style="font-size: 1.6rem; margin-top: 5px; font-family: Pretendard !important;"> 데이터 구성: 2013년 뉴욕에서 출발한 모든 항공편의 운항 데이터 </li>
+  <li style="font-size: 1.6rem; margin-top: 5px; font-family: Pretendard !important;"> 포함된 정보: 항공사, 공항, 날씨, 항공기 메타데이터 포함 </li>
+  <li style="font-size: 1.6rem; margin-top: 5px; font-family: Pretendard !important;"> 분석 대상: `flights`, `planes`, `weather` 중심 </li>
+</div>
 ---
 
-대쉬 3개("---") 를 사용하면 다음페이지 생성됨
 
-::: {incremental}
+## 분석 목표 {data-background-image="assets/bg.png"}
 
-- 하나씩 차례로 보여지게됨
-- 2번째
-- 3번째
-:::
+
+
+
+
+
+## 1. 시간대별 지연 분석 {data-background-image="assets/bg.png"}
+
+```{python}
+#| code-fold: false
+#| echo: true
+def divide_hour(hour):
+    if 6 <= hour < 12:
+        return 'morning'
+    if 12 <= hour < 18:
+        return 'lunch'
+    if 18 <= hour < 24:
+        return 'dinner'
+    return 'dawn'
+
+flights['time_of_day'] = flights['hour'].apply(divide_hour)
+result = flights.loc[:, ['hour', 'time_of_day']].head(3)
+```
 
 ::::: columns
-::: {.column width="40%"}
-이부분은 40%를차지하고
+
+
+:::{.column width="50%"}
+<div style="padding-bottom: 1rem;"> 
+- 설명: 출발 시간을 시간대별로 분류
+- 분류 기준: 새벽, 아침, 점심, 저녁
+- <span style="color: #ef4444">목적: 각 시간대별 지연 패턴 분석</span>
+</div>
+
 :::
 
-::: {.column width="60%"}
-이부분은 60% 차지
+:::{.column width="50%"}
+<div style="padding-top: 2rem;">
+
+```{python}
+print(result)
+```
+
+</div>
+
 :::
 :::::
 
 
-## 내용 작게 만들기 {.smaller}
+## 1. 시간대별 지연 분석 {data-background-image="assets/bg.png"}
 
-## 스크롤 가능하게 만들기 {.scrollable}
+:::::columns
+:::{.column width="60%"}
+```{python}
+#| code-fold: true
+#| echo: true
+time_flights = flights.groupby(['time_of_day']).size()
+plt.bar(['dawn', 'morning', 'lunch', 'dinner'], time_flights.values[[0, 3, 2, 1]])
+plt.xlabel('time')
+plt.ylabel('flights')
+plt.title('flights by time')
+plt.show()
+```
+:::
+
+:::{.column width="40%"}
+<div style="padding-top: 7rem;">
+
+<li>새벽에는 항공편 수가 거의 X</li>
+<li>아침과 점심에 가장 많음</li>
+<li>저녁시간에는 항공편 수 감소</li>
+
+</div>
+
+<p style="margin-top: 5rem;">
+- <span style="color: #ef4444; font-style: italic;">아침, 점심에 지연이 많겠지?</span>
+
+</p>
+:::
+:::::
 
 
-* 아이템들
-* 아이템들
-* 아이템들
-* 아이템들
-* 아이템들
-* 아이템들
-* 아이템들
-* 아이템들
-* 아이템들
-* 아이템들
-* 아이템들
-* 아이템들
-* 아이템들
+## 1. 시간대별 지연 분석 {data-background-image="assets/bg.png"}
+
+
+```{python}
+# 15분 이상 지연된 비행기들
+delayed_flights = flights.loc[flights['dep_delay'] >= 15, :]
+
+
+# 지연된 비행기 시간대별로 분류
+delayed_flight_cnt = delayed_flights.groupby('time_of_day').size()
+plt.bar(['dawn', 'morning', 'lunch', 'dinner'], delayed_flight_cnt.values[[0, 3, 2, 1]])
+plt.xlabel('time')
+plt.ylabel('delayed flights')
+plt.title('delay by time')
+plt.show()
+```
