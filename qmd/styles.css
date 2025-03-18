@@ -151,7 +151,7 @@ ul {
 }
 
 code span {
-  font-size: 20px !important;
+  font-size: 16px !important;
 }
 
 /* 첫장 타이틀 */
@@ -190,11 +190,6 @@ code span {
   margin-top: 1rem;
   -webkit-animation: bounce-in-top 2s both;
   animation: bounce-in-top 2s both;
-}
-
-.padding-w {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
 }
 
 /* 애니매이션 */

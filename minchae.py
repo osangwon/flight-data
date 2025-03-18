@@ -13,8 +13,9 @@ Merge 사용해서 flights 와 planes 병합한 데이터로
 '''
 
 # 데이터 불러오기
-from nycflights13 import flights, planes, weather
-
+from nycflights13 import flights, planes, weather, airports
+len(airports['faa'].unique())
+flights['origin'].unique()
 # 데이터 확인
 flights.info()
 planes.info()

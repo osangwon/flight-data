@@ -113,12 +113,13 @@ print(result)
 ## 1. 시간대별 지연 분석 {data-background-image="assets/bg.png"}
 
 :::::columns
-:::{.column width="60%"}
+:::{.column width="50%"}
 ```{python}
-#| code-fold: true
+#| eval: false
 #| echo: true
-time_flights = flights.groupby(['time_of_day']).size()
-plt.bar(['dawn', 'morning', 'lunch', 'dinner'], time_flights.values[[0, 3, 2, 1]])
+times = flights.groupby(['time_of_day']).size()
+plt.bar(['dawn', 'morning', 'lunch', 'dinner'], 
+        times.values[[0, 3, 2, 1]])
 plt.xlabel('time')
 plt.ylabel('flights')
 plt.title('flights by time')
@@ -126,8 +127,22 @@ plt.show()
 ```
 :::
 
-:::{.column width="40%"}
-<div style="padding-top: 7rem;">
+:::{.column width="50%"}
+<div style="padding-top: 0px; padding-left: 2rem;">
+
+```{python}
+#| eval: true
+#| echo: false
+times = flights.groupby(['time_of_day']).size()
+plt.figure(figsize=(5, 3))
+plt.bar(['dawn', 'morning', 'lunch', 'dinner'], 
+        times.values[[0, 3, 2, 1]])
+plt.xlabel('time')
+plt.ylabel('flights')
+plt.title('flights by time')
+plt.show()
+```
+
 
 <li>새벽에는 항공편 수가 거의 X</li>
 <li>아침과 점심에 가장 많음</li>
@@ -135,27 +150,61 @@ plt.show()
 
 </div>
 
+:::
 <p style="margin-top: 5rem;">
 - <span style="color: #ef4444; font-style: italic;">아침, 점심에 지연이 많겠지?</span>
 
 </p>
-:::
+
 :::::
 
 
 ## 1. 시간대별 지연 분석 {data-background-image="assets/bg.png"}
 
+<h6 style="font-size:26px; padding-top: 0px; color: #374151 !important;"> 15분 이상 지연된 비행기들 살펴보기 </h6>
 
+:::::columns
+
+:::{.column width="50%"}
 ```{python}
-# 15분 이상 지연된 비행기들
-delayed_flights = flights.loc[flights['dep_delay'] >= 15, :]
+#| code-fold: true
+#| echo: true
+colors = ["#a1a1aa", "#FF9999","#a1a1aa", "#FF9999"]
+times = flights.groupby(['time_of_day']).size()
+plt.figure(figsize=(5, 3))
+plt.bar(['dawn', 'morning', 'lunch', 'dinner'], 
+        times.values[[0, 3, 2, 1]],
+        color=colors)
+plt.xlabel('time')
+plt.ylabel('flights')
+plt.title('flights by time')
+plt.show()
+```
+<li><span style="margin-left: 2rem;">비행편 수</span></li>
+:::
 
+:::{.column width="50%"}
+```{python}
+#| code-fold: true
+#| echo: true
+
+# 15분 이상 지연된 비행기들
+delayed = flights.loc[flights['dep_delay'] >= 15, :]
 
 # 지연된 비행기 시간대별로 분류
-delayed_flight_cnt = delayed_flights.groupby('time_of_day').size()
-plt.bar(['dawn', 'morning', 'lunch', 'dinner'], delayed_flight_cnt.values[[0, 3, 2, 1]])
+delay_cnt = delayed.groupby('time_of_day').size()
+plt.figure(figsize=(5, 3))
+plt.bar(['dawn', 'morning', 'lunch', 'dinner'],
+       delay_cnt.values[[0, 3, 2, 1]],
+       color=colors)
 plt.xlabel('time')
 plt.ylabel('delayed flights')
 plt.title('delay by time')
 plt.show()
 ```
+<li><span style="margin-left: 2rem;">지연된 비행기 수</span></li>
+:::
+
+- <span style="position: absolute; top: 100;">ㅇㅇㅇㅇ</span>
+
+:::
