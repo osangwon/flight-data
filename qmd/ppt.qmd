@@ -1,0 +1,71 @@
+---
+title: "뉴욕 비행장 데이터 분석"
+subtitle: "권서연, 김민채, 박재원, 오상원"
+author: "7조"
+format: 
+  revealjs:
+    # logo: logo.png
+    css: styles.css
+    title-slide-attributes: 
+      data-background-image: "assets/title-bg.gif"
+      data-background-size: cover
+jupyter: python3
+---
+
+# 목차 {#cute-font}
+
+
+## 기본 정보
+
+* 다음과 같이 비행장 데이터 'flights, planes를 불러오겠습니다.
+
+```python
+import numpy as np
+import pandas as pd
+import nycflights13 import flights, planes
+
+flghts.info()
+planes.info()
+
+```
+
+---
+
+대쉬 3개("---") 를 사용하면 다음페이지 생성됨
+
+::: {incremental}
+
+- 하나씩 차례로 보여지게됨
+- 2번째
+- 3번째
+:::
+
+::::: columns
+::: {.column width="40%"}
+이부분은 40%를차지하고
+:::
+
+::: {.column width="60%"}
+이부분은 60% 차지
+:::
+:::::
+
+
+## 내용 작게 만들기 {.smaller}
+
+## 스크롤 가능하게 만들기 {.scrollable}
+
+
+* 아이템들
+* 아이템들
+* 아이템들
+* 아이템들
+* 아이템들
+* 아이템들
+* 아이템들
+* 아이템들
+* 아이템들
+* 아이템들
+* 아이템들
+* 아이템들
+* 아이템들
