@@ -82,10 +82,10 @@
 }
 
 @font-face {
-  font-family: "MangoDdobak-B";
-  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/MangoDdobak-B.woff2")
-    format("woff2");
-  font-weight: 700;
+  font-family: "Cafe24Ssurround";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff")
+    format("woff");
+  font-weight: normal;
   font-style: normal;
 }
 
@@ -96,8 +96,6 @@
 body,
 div,
 section,
-ul,
-li,
 p,
 a,
 span,
@@ -116,7 +114,18 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "MangoDdobak-B" !important;
+  font-family: "Cafe24Ssurround" !important;
+  padding-bottom: 10px;
+}
+
+ul,
+li {
+  font-family: "Cafe24Ssurround" !important;
+  font-size: 30px;
+}
+
+ul {
+  padding-top: 10px;
 }
 
 /* 첫장 타이틀 */
@@ -156,6 +165,8 @@ h6 {
   -webkit-animation: bounce-in-top 2s both;
   animation: bounce-in-top 2s both;
 }
+
+/* 맨 위 타이틀 */
 
 /* 애니매이션 */
 @-webkit-keyframes bounce-in-top {
