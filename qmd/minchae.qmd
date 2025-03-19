@@ -217,9 +217,11 @@ plt.show()
 
 ## 1. 시간대별 지연 분석 {data-background-image="assets/bg.png"}
 
-<img src="assets/news.png" style="width:80%;">
+<img src="assets/news.png" style="width:75%;">
 
 :::{.fragment}
+<img src="assets/question.png" style="position: absolute; bottom: 0; width: 30%; right: -40px;">
+
 <span class="red-color"
       style="font-family: Cafe24Ssurround; font-size: 32px;">그래서 연쇄 지연으로 저녁에 지연이 더 심한건가?</span>
 
