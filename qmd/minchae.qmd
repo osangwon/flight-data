@@ -1,0 +1,210 @@
+---
+title: "뉴욕 비행장 데이터 분석"
+subtitle: "권서연, 김민채, 박재원, 오상원"
+author: "7조"
+format: 
+  revealjs:
+    highlight-style: gruvbox
+    incremental: true  
+    # logo: logo.png
+    css: styles.css
+    title-slide-attributes: 
+      data-background-image: "assets/title-bg.gif"
+      data-background-size: cover
+    slide-attributes:
+      data-background-image: "assets/bg.png"
+      data-background-size: cover
+jupyter: python3
+---
+
+--- 
+
+## 목차 {data-background-image="assets/bg.png"}
+<div style="padding-left: 3rem !important;">
+
+::: {.incremental}
+1. 데이터 설명  
+2. 분석 목표  
+3. 항공편 지연 분석  
+   - 시간대별  
+   - 계절별  
+   - 날씨별  
+4. 항공기 특성 분석  
+   - 엔진 개수에 따른 특수성  
+   - 생산 년도와 엔진 개수  
+
+:::
+</div>
+
+---
+
+
+## 데이터셋 정보 {data-background-image="assets/bg.png"}
+
+```{python}
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+import pandas as pd
+from nycflights13 import flights, planes, weather
+```
+
+![](https://docs.ropensci.org/dittodb/articles/relational-nycflights.svg)
+
+<div style="margin-top: 1rem; padding-left: 1rem; padding-bottom: 1.6rem;">
+  <li style="font-size: 1.6rem; margin-top: 5px; font-family: Pretendard !important;"> 데이터 구성: 2013년 뉴욕에서 출발한 모든 항공편의 운항 데이터 </li>
+  <li style="font-size: 1.6rem; margin-top: 5px; font-family: Pretendard !important;"> 포함된 정보: 항공사, 공항, 날씨, 항공기 메타데이터 포함 </li>
+  <li style="font-size: 1.6rem; margin-top: 5px; font-family: Pretendard !important;"> 분석 대상: `flights`, `planes`, `weather` 중심 </li>
+</div>
+---
+
+
+## 분석 목표 {data-background-image="assets/bg.png"}
+
+
+
+
+
+
+## 1. 시간대별 지연 분석 {data-background-image="assets/bg.png"}
+
+```{python}
+#| code-fold: false
+#| echo: true
+def divide_hour(hour):
+    if 6 <= hour < 12:
+        return 'morning'
+    if 12 <= hour < 18:
+        return 'lunch'
+    if 18 <= hour < 24:
+        return 'dinner'
+    return 'dawn'
+
+flights['time_of_day'] = flights['hour'].apply(divide_hour)
+result = flights.loc[:, ['hour', 'time_of_day']].head(3)
+```
+
+::::: columns
+
+
+:::{.column width="50%"}
+<div style="padding-bottom: 1rem;"> 
+- 설명: 출발 시간을 시간대별로 분류
+- 분류 기준: 새벽, 아침, 점심, 저녁
+- <span style="color: #ef4444">목적: 각 시간대별 지연 패턴 분석</span>
+</div>
+
+:::
+
+:::{.column width="50%"}
+<div style="padding-top: 2rem;">
+
+```{python}
+print(result)
+```
+
+</div>
+
+:::
+:::::
+
+
+## 1. 시간대별 지연 분석 {data-background-image="assets/bg.png"}
+
+:::::columns
+:::{.column width="50%"}
+```{python}
+#| eval: false
+#| echo: true
+times = flights.groupby(['time_of_day']).size()
+plt.bar(['dawn', 'morning', 'lunch', 'dinner'], 
+        times.values[[0, 3, 2, 1]])
+plt.xlabel('time')
+plt.ylabel('flights')
+plt.title('flights by time')
+plt.show()
+```
+:::
+
+:::{.column width="50%"}
+<div style="padding-top: 0px; padding-left: 2rem;">
+
+```{python}
+#| eval: true
+#| echo: false
+times = flights.groupby(['time_of_day']).size()
+plt.figure(figsize=(5, 3))
+plt.bar(['dawn', 'morning', 'lunch', 'dinner'], 
+        times.values[[0, 3, 2, 1]])
+plt.xlabel('time')
+plt.ylabel('flights')
+plt.title('flights by time')
+plt.show()
+```
+
+
+<li>새벽에는 항공편 수가 거의 X</li>
+<li>아침과 점심에 가장 많음</li>
+<li>저녁시간에는 항공편 수 감소</li>
+
+</div>
+
+:::
+<p style="margin-top: 5rem;">
+- <span style="color: #ef4444; font-style: italic;">아침, 점심에 지연이 많겠지?</span>
+
+</p>
+
+:::::
+
+
+## 1. 시간대별 지연 분석 {data-background-image="assets/bg.png"}
+
+<h6 style="font-size:26px; padding-top: 0px; color: #374151 !important;"> 15분 이상 지연된 비행기들 살펴보기 </h6>
+
+:::::columns
+
+:::{.column width="50%"}
+```{python}
+#| code-fold: true
+#| echo: true
+colors = ["#a1a1aa", "#FF9999","#a1a1aa", "#FF9999"]
+times = flights.groupby(['time_of_day']).size()
+plt.figure(figsize=(5, 3))
+plt.bar(['dawn', 'morning', 'lunch', 'dinner'], 
+        times.values[[0, 3, 2, 1]],
+        color=colors)
+plt.xlabel('time')
+plt.ylabel('flights')
+plt.title('flights by time')
+plt.show()
+```
+<li><span style="margin-left: 2rem;">비행편 수</span></li>
+:::
+
+:::{.column width="50%"}
+```{python}
+#| code-fold: true
+#| echo: true
+
+# 15분 이상 지연된 비행기들
+delayed = flights.loc[flights['dep_delay'] >= 15, :]
+
+# 지연된 비행기 시간대별로 분류
+delay_cnt = delayed.groupby('time_of_day').size()
+plt.figure(figsize=(5, 3))
+plt.bar(['dawn', 'morning', 'lunch', 'dinner'],
+       delay_cnt.values[[0, 3, 2, 1]],
+       color=colors)
+plt.xlabel('time')
+plt.ylabel('delayed flights')
+plt.title('delay by time')
+plt.show()
+```
+<li><span style="margin-left: 2rem;">지연된 비행기 수</span></li>
+:::
+
+- <span style="position: absolute; top: 100;">ㅇㅇㅇㅇ</span>
+
+:::
