@@ -194,7 +194,6 @@ def divide_hour(hour):
         return 'dinner'
     return 'dawn'
 
-
 flights['time_of_day'] = flights['hour'].apply(divide_hour)
 
 # 시각화: 시간대 별로 항공편수가 몇개있는지
@@ -230,33 +229,32 @@ plt.title('delay by time')
 
 # 연쇄지연 여부 분석
 # 출발 시간 기준으로 정렬
+sort_ = flights.sort_values(['year','month', 'day', 'hour', 'minute'], ascending=True)
 
-sorted_flight = flights.sort_values(['year','month', 'day', 'hour', 'minute'], ascending=True)
+# 같은 날 이전 항공편의 도착 지연 정보 추가
+sort_['prev_arr_delay'] = sort_.groupby(['year', 'month', 'day', 'flight'])['arr_delay'].shift(1)
 
-# 같은 날, 이전 시간에 출발한 항공편의 도착 지연 정보 추가
-sorted_flight['prev_arr_delay'] = sorted_flight.groupby(['year', 'month', 'day', 'flight'])['arr_delay'].shift(1)
-sorted_flight = sorted_flight.dropna(subset='prev_arr_delay')
+# 해당 날에 첫 항공편이거나, 유일한 항공편 제거
+sort_ = sort_.dropna(subset='prev_arr_delay')
 
-# 연쇄 지연 여부 분석 (이전 항공편의 도착 지연이 현재 항공편의 출발 지연에 영향을 주었는지)
-dawn = len(sorted_flight.loc[(sorted_flight['time_of_day'] == 'dawn') & (sorted_flight['dep_delay'] >= 15) & (sorted_flight['prev_arr_delay'] >= 15), :])
-morning = len(sorted_flight.loc[(sorted_flight['time_of_day'] == 'morning') & (sorted_flight['dep_delay'] >= 15) & (sorted_flight['prev_arr_delay'] >= 15), :])
-lunch = len(sorted_flight.loc[(sorted_flight['time_of_day'] == 'lunch') & (sorted_flight['dep_delay'] >= 15) & (sorted_flight['prev_arr_delay'] >= 15), :])
-dinner = len(sorted_flight.loc[(sorted_flight['time_of_day'] == 'dinner') & (sorted_flight['dep_delay'] >= 15) & (sorted_flight['prev_arr_delay'] >= 15), :])
-
-labels = ['dawn', 'morning', 'lunch', 'dinner']
-sizes = [dawn, morning, lunch, dinner]
-colors = ["#c4b5fd", "#bef264", "#fdba74", "#155e75"]
+# comprehension 사용으로 연쇄 지연 count
+days = ['dawn', 'morning', 'lunch', 'dinner']
+delay_counts = {time: len(sort_.loc[(sort_['time_of_day'] == time) & 
+                                  (sort_['dep_delay'] >= 15) & 
+                                  (sort_['prev_arr_delay'] >= 15), :]) 
+                for time in days}
 
 # 파이 차트 그리기
 plt.figure(figsize=(7, 7))
-plt.pie(sizes, 
-        labels=labels, 
+colors = ["#c4b5fd", "#bef264", "#fdba74", "#155e75"]
+plt.pie(delay_counts.values(), 
+        labels=days, 
         autopct=lambda p: f'{p:.1f}%' if p > 0 else '',
         startangle=90, 
         colors=colors, 
         wedgeprops={"edgecolor": "#52525b"})
 plt.title("cascade delay")
-plt.legend(labels, title="Time Periods", loc="upper right")
+plt.legend(days, title="Time Periods", loc="upper right")
 plt.show()
 
 '''
