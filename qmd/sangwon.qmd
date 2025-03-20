@@ -131,7 +131,7 @@ plt.show()
 
 ## 1. 출발 시각에 따른 출발 지연 시간 {data-background-image="assets/bg.png"}
 
-:::: {.columns}
+::::: {.columns}
 
 ::: {.column width="60%"}
 ```{python}
@@ -169,7 +169,7 @@ plt.show()
 - 이는 앞서 조사한 연쇄 지연과 일치하는 결과를 나타낸다.
 :::
 
-::::
+:::::
 
 ------------------------------------------------------------------------
 
@@ -202,7 +202,7 @@ plt.show()
 
 ## 2. 계절별 출발 지연 시간 {data-background-image="assets/bg.png"}
 
-:::: {.columns}
+::::: {.columns}
 
 ::: {.column width="60%"}
 ```{python}
@@ -226,17 +226,15 @@ plt.xlabel("season")
 plt.title('Correlate season with dep_delay')
 plt.show()
 ```
-:::
 
 - <span class="red-color">여름이</span> 가장 높은 지연 시간을 가지고, <span class="red-color">가을이 </span>가장 낮은 지연 시간을 가진다.
+:::
 
+:::::
 ------------------------------------------------------------------------
 
 ## 2. 계절별 출발 지연 시간 {data-background-image="assets/bg.png"}
 
-:::: {.columns}
-
-::: {.column width="60%"}
 ```{python}
 dep_delay_avg = mer_dat.groupby("month")["dep_delay"].mean()
 
@@ -265,14 +263,11 @@ plt.show()
 - 여름은 높은 기온으로 인해 공기 밀도가 낮아져 항공기의 이륙 성능이 저하된다.
 
 - 또한 여름에는 폭우, 천둥번개, 허리케인 등 강한 기상 현상에 의해 지연이 다수 발생한다.
-
+:::
 ------------------------------------------------------------------------
 
 ## 2. 계절별 출발 지연 시간 {data-background-image="assets/bg.png"}
 
-:::: {.columns}
-
-::: {.column width="60%"}
 ```{python}
 dep_delay_avg = mer_dat.groupby("month")["dep_delay"].mean()
 
@@ -301,14 +296,12 @@ plt.show()
 - 겨울철에는 눈, 얼음, 결빙 등으로 인해 활주로가 이상적인 상태를 유지하기 힘들다.
 
 - 또한 불확실한 기상 조건으로 안개나 눈보라 등으로 인한 시정 불량이 발생하여 지연이 다수 발생한다.
+:::
 
 ------------------------------------------------------------------------
 
 ## 2. 계절별 출발 지연 시간 {data-background-image="assets/bg.png"}
 
-:::: {.columns}
-
-::: {.column width="60%"}
 ```{python}
 dep_delay_avg = mer_dat.groupby("month")["dep_delay"].mean()
 
@@ -330,7 +323,6 @@ plt.xlabel("season")
 plt.title('Correlate season with dep_delay')
 plt.show()
 ```
-:::
 
 :::{.fragment}
 <li><span class="red-color">가을은</span> 기온 변화가 적고 기상 조건이 안정적이다.</li>
@@ -362,9 +354,6 @@ plt.grid(True)
 
 ## 3. 비행기 제작 연도별 출발 지연 시간 {data-background-image="assets/bg.png"}
 
-:::: {.columns}
-
-::: {.column width="60%"}
 ```{python}
 delay_by_year = mer_dat.groupby("year_y")["dep_delay"].mean().reset_index()
 
