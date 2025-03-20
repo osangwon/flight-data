@@ -240,11 +240,11 @@ plt.xlabel("season")
 plt.title('Correlate season with dep_delay')
 plt.show()
 ```
+:::{.fragment}
+<img src="assets/rain.png" style="position: absolute; bottom: 0; width: 50%; right: -250px;">
+<li>여름에는 폭우, 천둥번개, 허리케인 등 강한 기상 현상에 의해<br> 지연이 다수 발생한다.</li>
 
-- 여름은 높은 기온으로 인해 공기 밀도가 낮아져 항공기의 이륙 성능이 저하된다.
-
-- 또한 여름에는 폭우, 천둥번개, 허리케인 등 강한 기상 현상에 의해 지연이 다수 발생한다.
-
+:::
 ------------------------------------------------------------------------
 
 ## 2. 계절별 출발 지연 시간 {data-background-image="assets/bg.png"}
@@ -270,11 +270,11 @@ plt.xlabel("season")
 plt.title('Correlate season with dep_delay')
 plt.show()
 ```
+:::{.fragment}
+<img src="assets/snow.png" style="position: absolute; top: 10px; width: 20%; left: -200px;">
+<li>겨울에는 눈, 얼음, 결빙 등으로 인해 활주로가 이상적인<br> 상태를 유지하기 힘들다.</li>
 
-- 겨울철에는 눈, 얼음, 결빙 등으로 인해 활주로가 이상적인 상태를 유지하기 힘들다.
-
-- 또한 불확실한 기상 조건으로 안개나 눈보라 등으로 인한 시정 불량이 발생하여 지연이 다수 발생한다.
-
+:::
 ------------------------------------------------------------------------
 
 ## 2. 계절별 출발 지연 시간 {data-background-image="assets/bg.png"}
@@ -301,10 +301,11 @@ plt.title('Correlate season with dep_delay')
 plt.show()
 ```
 
-- 가을이 봄과 달리 지연이 적은 이유는 가을은 기온 변화가 적고 기상 조건이 안정적이다.
+:::{.fragment}
+<li><span class="red-color">가을은</span> 기온 변화가 적고 기상 조건이 안정적이다.</li>
+<li><span class="red-color">봄은</span> 가을보다 날씨의 변화 폭이 크기 때문에 지연이 발생한다.</li>
 
-- 봄은 가을과 달리 날씨의 변화 폭이 크기 때문에 지연이 다수 발생한다.
-
+:::
 ------------------------------------------------------------------------
 
 ## 3. 비행기 제작 연도별 출발 지연 시간 {data-background-image="assets/bg.png"}
@@ -346,7 +347,7 @@ plt.title('Correlate manufacturing year with Average Departure Delay')
 plt.grid(True)
 ```
 
-- 비행기 제작 시기가 현재에 가까워질수록 출발 지연 시간이 늘어나는 것을 확인할 수 있다.
+- 제작 시기가 <span class="red-color">현재에 가까워질수록</span> 출발 지연 시간이 늘어남
 
 ------------------------------------------------------------------------
 
