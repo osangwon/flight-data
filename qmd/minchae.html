@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="ppt_files/libs/clipboard/clipboard.min.js"></script>
-<script src="ppt_files/libs/quarto-html/tabby.min.js"></script>
-<script src="ppt_files/libs/quarto-html/popper.min.js"></script>
-<script src="ppt_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="ppt_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="ppt_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="ppt_files/libs/quarto-html/quarto-syntax-highlighting-fdada01b6a4a613316abf06c0f7ea711.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="minchae_files/libs/clipboard/clipboard.min.js"></script>
+<script src="minchae_files/libs/quarto-html/tabby.min.js"></script>
+<script src="minchae_files/libs/quarto-html/popper.min.js"></script>
+<script src="minchae_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="minchae_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="minchae_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="minchae_files/libs/quarto-html/quarto-syntax-highlighting-fdada01b6a4a613316abf06c0f7ea711.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.6.42">
 
   <meta name="author" content="7조">
@@ -14,8 +14,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="ppt_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="ppt_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="minchae_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="minchae_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -94,12 +94,12 @@
     code span.vs { color: #98971a; } /* VerbatimString */
     code span.wa { color: #282828; background-color: #fabd2f; } /* Warning */
   </style>
-  <link rel="stylesheet" href="ppt_files/libs/revealjs/dist/theme/quarto-2f366650f320edcfcf53d73c80250a32.css">
+  <link rel="stylesheet" href="minchae_files/libs/revealjs/dist/theme/quarto-2f366650f320edcfcf53d73c80250a32.css">
   <link rel="stylesheet" href="styles.css">
-  <link href="ppt_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="ppt_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="ppt_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="ppt_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="minchae_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="minchae_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="minchae_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="minchae_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -253,31 +253,32 @@
 </section>
 <section id="시간대별-지연-분석" class="slide level2" data-background-image="assets/bg.png">
 <h2>1. 시간대별 지연 분석</h2>
-<div id="088fccf0" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="kw">def</span> divide_hour(hour):</span>
-<span id="cb1-2"><a href=""></a>    <span class="cf">if</span> <span class="dv">6</span> <span class="op">&lt;=</span> hour <span class="op">&lt;</span> <span class="dv">12</span>:</span>
-<span id="cb1-3"><a href=""></a>        <span class="cf">return</span> <span class="st">'morning'</span></span>
-<span id="cb1-4"><a href=""></a>    <span class="cf">if</span> <span class="dv">12</span> <span class="op">&lt;=</span> hour <span class="op">&lt;</span> <span class="dv">18</span>:</span>
-<span id="cb1-5"><a href=""></a>        <span class="cf">return</span> <span class="st">'lunch'</span></span>
-<span id="cb1-6"><a href=""></a>    <span class="cf">if</span> <span class="dv">18</span> <span class="op">&lt;=</span> hour <span class="op">&lt;</span> <span class="dv">24</span>:</span>
-<span id="cb1-7"><a href=""></a>        <span class="cf">return</span> <span class="st">'dinner'</span></span>
-<span id="cb1-8"><a href=""></a>    <span class="cf">return</span> <span class="st">'dawn'</span></span>
-<span id="cb1-9"><a href=""></a></span>
-<span id="cb1-10"><a href=""></a>flights[<span class="st">'time_of_day'</span>] <span class="op">=</span> flights[<span class="st">'hour'</span>].<span class="bu">apply</span>(divide_hour)</span>
-<span id="cb1-11"><a href=""></a>result <span class="op">=</span> flights.loc[:, [<span class="st">'hour'</span>, <span class="st">'time_of_day'</span>]].head(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="1233d19b" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="co"># 전처리: 출발시간, 도착시간, 지연시간이 nan 일 경우 제거</span></span>
+<span id="cb1-2"><a href=""></a>flights <span class="op">=</span> flights.dropna(</span>
+<span id="cb1-3"><a href=""></a>    subset<span class="op">=</span>[<span class="st">'dep_time'</span>, <span class="st">'arr_time'</span>, <span class="st">'arr_delay'</span>, <span class="st">'dep_delay'</span>, <span class="st">'air_time'</span>])</span>
+<span id="cb1-4"><a href=""></a></span>
+<span id="cb1-5"><a href=""></a><span class="co"># 시간대 나누는 함수</span></span>
+<span id="cb1-6"><a href=""></a><span class="kw">def</span> divide_hour(hour):</span>
+<span id="cb1-7"><a href=""></a>    <span class="cf">if</span> <span class="dv">6</span> <span class="op">&lt;=</span> hour <span class="op">&lt;</span> <span class="dv">12</span>:</span>
+<span id="cb1-8"><a href=""></a>        <span class="cf">return</span> <span class="st">'morning'</span></span>
+<span id="cb1-9"><a href=""></a>    <span class="cf">if</span> <span class="dv">12</span> <span class="op">&lt;=</span> hour <span class="op">&lt;</span> <span class="dv">18</span>:</span>
+<span id="cb1-10"><a href=""></a>        <span class="cf">return</span> <span class="st">'lunch'</span></span>
+<span id="cb1-11"><a href=""></a>    <span class="cf">if</span> <span class="dv">18</span> <span class="op">&lt;=</span> hour <span class="op">&lt;</span> <span class="dv">24</span>:</span>
+<span id="cb1-12"><a href=""></a>        <span class="cf">return</span> <span class="st">'dinner'</span></span>
+<span id="cb1-13"><a href=""></a>    <span class="cf">return</span> <span class="st">'dawn'</span></span>
+<span id="cb1-14"><a href=""></a>flights[<span class="st">'time_of_day'</span>] <span class="op">=</span> flights[<span class="st">'hour'</span>].<span class="bu">apply</span>(divide_hour)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div style="padding-bottom: 1rem;">
 <ul>
-<li class="fragment">설명: 출발 시간을 시간대별로 분류</li>
 <li class="fragment">분류 기준: 새벽, 아침, 점심, 저녁</li>
 <li class="fragment"><span style="color: #ef4444">목적: 각 시간대별 지연 패턴 분석</span></li>
 </ul>
 </div>
 </div><div class="column" style="width:50%;">
-<div style="padding-top: 2rem;">
-<div id="32c477bb" class="cell" data-execution_count="3">
+<div id="d4314dd4" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-stdout">
 <pre><code>   hour time_of_day
 0     5        dawn
@@ -285,113 +286,150 @@
 2     5        dawn</code></pre>
 </div>
 </div>
-</div>
 </div></div>
 </section>
 <section id="시간대별-지연-분석-1" class="slide level2" data-background-image="assets/bg.png">
 <h2>1. 시간대별 지연 분석</h2>
 <div class="columns">
-<div class="column" style="width:50%;">
-<div id="b40170fb" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a>times <span class="op">=</span> flights.groupby([<span class="st">'time_of_day'</span>]).size()</span>
+<div class="column" style="width:55%;">
+<h6 class="subtitle-style">
+시간대 별 항공편이 얼마나 있을까?
+</h6>
+<div id="30430831" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a>time_flights <span class="op">=</span> flights.groupby(<span class="st">'time_of_day'</span>).size()</span>
 <span id="cb3-2"><a href=""></a>plt.bar([<span class="st">'dawn'</span>, <span class="st">'morning'</span>, <span class="st">'lunch'</span>, <span class="st">'dinner'</span>], </span>
-<span id="cb3-3"><a href=""></a>        times.values[[<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>]])</span>
+<span id="cb3-3"><a href=""></a>        time_flights.values[[<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>]])</span>
 <span id="cb3-4"><a href=""></a>plt.xlabel(<span class="st">'time'</span>)</span>
 <span id="cb3-5"><a href=""></a>plt.ylabel(<span class="st">'flights'</span>)</span>
-<span id="cb3-6"><a href=""></a>plt.title(<span class="st">'flights by time'</span>)</span>
-<span id="cb3-7"><a href=""></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-6"><a href=""></a>plt.title(<span class="st">'flights by time'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div><div class="column" style="width:50%;">
-<div style="padding-top: 0px; padding-left: 2rem;">
-<div id="4081f533" class="cell" data-execution_count="5">
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="ppt_files/figure-revealjs/cell-6-output-1.png" width="470" height="302"></p>
-</figure>
-</div>
-</div>
-</div>
-<li>
+<div style="margin-left:1rem;">
+<li style="margin-top: 3rem;">
 새벽에는 항공편 수가 거의 X
 </li>
 <li>
-아침과 점심에 가장 많음
+<span style="color: #ef4444;">아침과 점심에</span> 가장 많음
 </li>
 <li>
 저녁시간에는 항공편 수 감소
 </li>
 </div>
-</div><p style="margin-top: 5rem;"></p><ul>
-<li class="fragment"><span style="color: #ef4444; font-style: italic;">아침, 점심에 지연이 많겠지?</span></li>
-</ul><p></p>
+</div><div class="column" style="width:45%;">
+<div id="2b48c49f" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="minchae_files/figure-revealjs/cell-6-output-1.png" width="544" height="376"></p>
+</figure>
 </div>
+</div>
+</div>
+<div class="fragment">
+<p style="color: #ef4444; font-style: italic; font-size: 34px; margin-top: 0.6rem; font-family: Cafe24Ssurround">
+“아침, 점심에 지연이 많겠지?”
+</p>
+</div>
+</div></div>
 </section>
 <section id="시간대별-지연-분석-2" class="slide level2" data-background-image="assets/bg.png">
 <h2>1. 시간대별 지연 분석</h2>
-<h6 style="font-size:26px; padding-top: 0px; color: #374151 !important;">
-15분 이상 지연된 비행기들 살펴보기
+<h6 class="subtitle-style">
+15분 이상 출발 지연된 비행편 살펴보기
 </h6>
 <div class="columns">
-<div class="column" style="width:50%;">
-<div id="e3d48ec2" class="cell" data-execution_count="6">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a>colors <span class="op">=</span> [<span class="st">"#a1a1aa"</span>, <span class="st">"#FF9999"</span>,<span class="st">"#a1a1aa"</span>, <span class="st">"#FF9999"</span>]</span>
-<span id="cb4-2"><a href=""></a>times <span class="op">=</span> flights.groupby([<span class="st">'time_of_day'</span>]).size()</span>
-<span id="cb4-3"><a href=""></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">3</span>))</span>
-<span id="cb4-4"><a href=""></a>plt.bar([<span class="st">'dawn'</span>, <span class="st">'morning'</span>, <span class="st">'lunch'</span>, <span class="st">'dinner'</span>], </span>
-<span id="cb4-5"><a href=""></a>        times.values[[<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>]],</span>
-<span id="cb4-6"><a href=""></a>        color<span class="op">=</span>colors)</span>
-<span id="cb4-7"><a href=""></a>plt.xlabel(<span class="st">'time'</span>)</span>
-<span id="cb4-8"><a href=""></a>plt.ylabel(<span class="st">'flights'</span>)</span>
-<span id="cb4-9"><a href=""></a>plt.title(<span class="st">'flights by time'</span>)</span>
-<span id="cb4-10"><a href=""></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="column" style="width:55%;">
+<div id="a3f7da82" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="co"># 15분 이상 지연된 비행기들</span></span>
+<span id="cb4-2"><a href=""></a>delayed <span class="op">=</span> flights.loc[flights[<span class="st">'dep_delay'</span>] <span class="op">&gt;=</span> <span class="dv">15</span>, :]</span>
+<span id="cb4-3"><a href=""></a></span>
+<span id="cb4-4"><a href=""></a><span class="co"># 지연된 비행기 시간대별로 분류</span></span>
+<span id="cb4-5"><a href=""></a>delay_cnt <span class="op">=</span> delayed.groupby(<span class="st">'time_of_day'</span>).size()</span>
+<span id="cb4-6"><a href=""></a>plt.bar([<span class="st">'dawn'</span>, <span class="st">'morning'</span>, <span class="st">'lunch'</span>, <span class="st">'dinner'</span>],</span>
+<span id="cb4-7"><a href=""></a>       delay_cnt.values[[<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>]])</span>
+<span id="cb4-8"><a href=""></a>plt.xlabel(<span class="st">'time'</span>)</span>
+<span id="cb4-9"><a href=""></a>plt.ylabel(<span class="st">'delayed flights'</span>)</span>
+<span id="cb4-10"><a href=""></a>plt.title(<span class="st">'delay by time'</span>)</span>
+<span id="cb4-11"><a href=""></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:45%;">
+<div id="05d12d09" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="ppt_files/figure-revealjs/cell-7-output-1.png" width="470" height="302"></p>
+<p><img data-src="minchae_files/figure-revealjs/cell-8-output-1.png" width="461" height="302"></p>
 </figure>
 </div>
 </div>
 </div>
-<li>
-<span style="margin-left: 2rem;">비행편 수</span>
-</li>
-</div><div class="column" style="width:50%;">
-<div id="c5fe4c8b" class="cell" data-execution_count="7">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="co"># 15분 이상 지연된 비행기들</span></span>
-<span id="cb5-2"><a href=""></a>delayed <span class="op">=</span> flights.loc[flights[<span class="st">'dep_delay'</span>] <span class="op">&gt;=</span> <span class="dv">15</span>, :]</span>
-<span id="cb5-3"><a href=""></a></span>
-<span id="cb5-4"><a href=""></a><span class="co"># 지연된 비행기 시간대별로 분류</span></span>
-<span id="cb5-5"><a href=""></a>delay_cnt <span class="op">=</span> delayed.groupby(<span class="st">'time_of_day'</span>).size()</span>
-<span id="cb5-6"><a href=""></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">3</span>))</span>
-<span id="cb5-7"><a href=""></a>plt.bar([<span class="st">'dawn'</span>, <span class="st">'morning'</span>, <span class="st">'lunch'</span>, <span class="st">'dinner'</span>],</span>
-<span id="cb5-8"><a href=""></a>       delay_cnt.values[[<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>]],</span>
-<span id="cb5-9"><a href=""></a>       color<span class="op">=</span>colors)</span>
-<span id="cb5-10"><a href=""></a>plt.xlabel(<span class="st">'time'</span>)</span>
-<span id="cb5-11"><a href=""></a>plt.ylabel(<span class="st">'delayed flights'</span>)</span>
-<span id="cb5-12"><a href=""></a>plt.title(<span class="st">'delay by time'</span>)</span>
-<span id="cb5-13"><a href=""></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="ppt_files/figure-revealjs/cell-8-output-1.png" width="461" height="302"></p>
-</figure>
-</div>
-</div>
-</div>
-<li>
-<span style="margin-left: 2rem;">지연된 비행기 수</span>
-</li>
-</div><ul>
-<li class="fragment"><span style="position: absolute; top: 100;">ㅇㅇㅇㅇ</span></li>
+<ul>
+<li class="fragment">항공편이 많은건 아침인데?</li>
+<li class="fragment"><span class="red-color">저녁이 더 많이 지연되고 있음!</span></li>
 </ul>
+</div></div>
+</section>
+<section id="시간대별-지연-분석-3" class="slide level2" data-background-image="assets/bg.png">
+<h2>1. 시간대별 지연 분석</h2>
+<p><img src="assets/news.png" style="width:75%;"></p>
+<div class="fragment">
+<p><img src="assets/question.png" style="position: absolute; bottom: 0; width: 30%; right: -40px;"></p>
+<p><span class="red-color" style="font-family: Cafe24Ssurround; font-size: 32px;">그래서 연쇄 지연으로 저녁에 지연이 더 심한건가?</span></p>
 </div>
+</section>
+<section id="연쇄-지연-분석" class="slide level2" data-background-image="assets/bg.png">
+<h2>1-2. 연쇄 지연 분석</h2>
+<h6 class="subtitle-style">
+데이터 전처리 과정
+</h6>
+<div id="f324e055" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="co"># 출발 시간 기준으로 정렬</span></span>
+<span id="cb5-2"><a href=""></a>sort_ <span class="op">=</span> flights.sort_values([<span class="st">'year'</span>,<span class="st">'month'</span>, <span class="st">'day'</span>, <span class="st">'hour'</span>, <span class="st">'minute'</span>], ascending<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-3"><a href=""></a></span>
+<span id="cb5-4"><a href=""></a><span class="co"># 같은 날 이전 항공편의 도착 지연 정보 추가</span></span>
+<span id="cb5-5"><a href=""></a>sort_[<span class="st">'prev_arr_delay'</span>] <span class="op">=</span> sort_.groupby([<span class="st">'year'</span>, <span class="st">'month'</span>, <span class="st">'day'</span>, <span class="st">'flight'</span>])[<span class="st">'arr_delay'</span>].shift(<span class="dv">1</span>)</span>
+<span id="cb5-6"><a href=""></a></span>
+<span id="cb5-7"><a href=""></a><span class="co"># 해당 날에 첫 항공편이거나, 유일한 항공편 제거</span></span>
+<span id="cb5-8"><a href=""></a>sort_ <span class="op">=</span> sort_.dropna(subset<span class="op">=</span><span class="st">'prev_arr_delay'</span>)</span>
+<span id="cb5-9"><a href=""></a></span>
+<span id="cb5-10"><a href=""></a><span class="co"># comprehension 사용으로 연쇄 지연 count</span></span>
+<span id="cb5-11"><a href=""></a>days <span class="op">=</span> [<span class="st">'dawn'</span>, <span class="st">'morning'</span>, <span class="st">'lunch'</span>, <span class="st">'dinner'</span>]</span>
+<span id="cb5-12"><a href=""></a>delay_counts <span class="op">=</span> {time: <span class="bu">len</span>(sort_.loc[(sort_[<span class="st">'time_of_day'</span>] <span class="op">==</span> time) <span class="op">&amp;</span> </span>
+<span id="cb5-13"><a href=""></a>                                  (sort_[<span class="st">'dep_delay'</span>] <span class="op">&gt;=</span> <span class="dv">15</span>) <span class="op">&amp;</span> </span>
+<span id="cb5-14"><a href=""></a>                                  (sort_[<span class="st">'prev_arr_delay'</span>] <span class="op">&gt;=</span> <span class="dv">15</span>), :]) </span>
+<span id="cb5-15"><a href=""></a>                <span class="cf">for</span> time <span class="kw">in</span> days}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="연쇄-지연-분석-1" class="slide level2" data-background-image="assets/bg.png">
+<h2>1-2. 연쇄 지연 분석</h2>
+<h6 class="subtitle-style">
+데이터 시각화
+</h6>
+<div class="columns">
+<div class="column" style="width:55%;">
+<div id="4739562c" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="co"># 파이 차트 그리기</span></span>
+<span id="cb6-2"><a href=""></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">7</span>))</span>
+<span id="cb6-3"><a href=""></a>colors <span class="op">=</span> [<span class="st">"#c4b5fd"</span>, <span class="st">"#bef264"</span>, <span class="st">"#fdba74"</span>, <span class="st">"#155e75"</span>]</span>
+<span id="cb6-4"><a href=""></a>plt.pie(delay_counts.values(), </span>
+<span id="cb6-5"><a href=""></a>        labels<span class="op">=</span>days, </span>
+<span id="cb6-6"><a href=""></a>        autopct<span class="op">=</span><span class="kw">lambda</span> p: <span class="ss">f'</span><span class="sc">{</span>p<span class="sc">:.1f}</span><span class="ss">%'</span> <span class="cf">if</span> p <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">''</span>,</span>
+<span id="cb6-7"><a href=""></a>        startangle<span class="op">=</span><span class="dv">90</span>, </span>
+<span id="cb6-8"><a href=""></a>        colors<span class="op">=</span>colors, </span>
+<span id="cb6-9"><a href=""></a>        wedgeprops<span class="op">=</span>{<span class="st">"edgecolor"</span>: <span class="st">"#52525b"</span>})</span>
+<span id="cb6-10"><a href=""></a>plt.title(<span class="st">"cascade delay"</span>)</span>
+<span id="cb6-11"><a href=""></a>plt.legend(days, title<span class="op">=</span><span class="st">"Time Periods"</span>, loc<span class="op">=</span><span class="st">"upper right"</span>)</span>
+<span id="cb6-12"><a href=""></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:45%;">
+<div id="c812439e" class="cell" data-execution_count="10">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="minchae_files/figure-revealjs/cell-11-output-1.png" width="422" height="409"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
 
 </section>
     </div>
@@ -402,19 +440,19 @@
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="ppt_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="minchae_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="ppt_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="ppt_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="ppt_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="ppt_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="ppt_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="minchae_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="minchae_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="minchae_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="minchae_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="minchae_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="ppt_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="ppt_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="ppt_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="ppt_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="minchae_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="minchae_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="minchae_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="minchae_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>

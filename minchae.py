@@ -13,8 +13,9 @@ Merge 사용해서 flights 와 planes 병합한 데이터로
 '''
 
 # 데이터 불러오기
-from nycflights13 import flights, planes, weather
-
+from nycflights13 import flights, planes, weather, airports
+len(airports['faa'].unique())
+flights['origin'].unique()
 # 데이터 확인
 flights.info()
 planes.info()
@@ -176,7 +177,12 @@ plt.title('Popular Airline Info')
 
 
 # 시간대별 항공편 수 분석
-nycflights = flights
+# 전처리
+flights.isna().sum()
+
+# 출발시간, 도착시간, 지연시간이 nan 일 경우 제거
+flights = flights.dropna(
+    subset=['dep_time', 'arr_time', 'arr_delay', 'dep_delay', 'air_time'])
 
 # 시간대 나누는 함수
 def divide_hour(hour):
@@ -188,23 +194,26 @@ def divide_hour(hour):
         return 'dinner'
     return 'dawn'
 
-# 시간대 나눈 것을 열에 추가
-nycflights['time_of_day'] = nycflights['hour'].apply(divide_hour)
+flights['time_of_day'] = flights['hour'].apply(divide_hour)
 
 # 시각화: 시간대 별로 항공편수가 몇개있는지
-time_flights = nycflights.groupby(['time_of_day']).size()
-plt.bar(['dawn', 'morning', 'lunch', 'dinner'], time_flights.values[[0, 3, 2, 1]])
+time_flights = flights.groupby('time_of_day').size()
+colors = ["#a1a1aa", "#FF9999", "#FF9999", "#a1a1aa"]
+plt.bar(['dawn', 'morning', 'lunch', 'dinner'], 
+        time_flights.values[[0, 3, 2, 1]], color=colors)
 plt.xlabel('time')
 plt.ylabel('flights')
 plt.title('flights by time')
 
 # 15분 이상 지연된 비행기들
-delayed_flights = nycflights.loc[nycflights['dep_delay'] >= 15, :]
+delayed_flights = flights.loc[flights['dep_delay'] >= 15, :]
 
 
 # 지연된 비행기 시간대별로 분류
+colors = ["#a1a1aa", "#FF9999", "#a1a1aa", "#FF9999"]
 delayed_flight_cnt = delayed_flights.groupby('time_of_day').size()
-plt.bar(['dawn', 'morning', 'lunch', 'dinner'], delayed_flight_cnt.values[[0, 3, 2, 1]])
+plt.bar(['dawn', 'morning', 'lunch', 'dinner'], 
+        delayed_flight_cnt.values[[0, 3, 2, 1]], color=colors)
 plt.xlabel('time')
 plt.ylabel('delayed flights')
 plt.title('delay by time')
@@ -220,30 +229,33 @@ plt.title('delay by time')
 
 # 연쇄지연 여부 분석
 # 출발 시간 기준으로 정렬
-sorted_flight = nycflights.sort_values(['year','month', 'day', 'dep_time'], ascending=True)
-sorted_flight = sorted_flight.fillna(0)
+sort_ = flights.sort_values(['year','month', 'day', 'hour', 'minute'], ascending=True)
 
-# 같은 날, 이전 시간에 출발한 항공편의 도착 지연 정보 추가
-sorted_flight['prev_arr_delay'] = sorted_flight.groupby(['year', 'month', 'day'])['arr_delay'].shift(1)
-sorted_flight['prev_arr_delay']
+# 같은 날 이전 항공편의 도착 지연 정보 추가
+sort_['prev_arr_delay'] = sort_.groupby(['year', 'month', 'day', 'flight'])['arr_delay'].shift(1)
 
-# 연쇄 지연 여부 분석 (이전 항공편의 도착 지연이 현재 항공편의 출발 지연에 영향을 주었는지)
-delay_cnt = len(sorted_flight.loc[sorted_flight['dep_delay'] >= 15, :]) # 72914
+# 해당 날에 첫 항공편이거나, 유일한 항공편 제거
+sort_ = sort_.dropna(subset='prev_arr_delay')
 
-next_delay_morning = len(sorted_flight.loc[(sorted_flight['time_of_day'] == 'morning') & (sorted_flight['dep_delay'] >= 15) & (sorted_flight['prev_arr_delay'] >= 15), :])
-next_delay_dawn = len(sorted_flight.loc[(sorted_flight['time_of_day'] == 'dawn') & (sorted_flight['dep_delay'] >= 15) & (sorted_flight['prev_arr_delay'] >= 15), :])
-next_delay_lunch = len(sorted_flight.loc[(sorted_flight['time_of_day'] == 'lunch') & (sorted_flight['dep_delay'] >= 15) & (sorted_flight['prev_arr_delay'] >= 15), :])
-next_delay_dinner = len(sorted_flight.loc[(sorted_flight['time_of_day'] == 'dinner') & (sorted_flight['dep_delay'] >= 15) & (sorted_flight['prev_arr_delay'] >= 15), :])
-
-labels = ['dawn', 'morning', 'lunch', 'dinner']
-sizes = [next_delay_dawn, next_delay_morning, next_delay_lunch, next_delay_dinner]
-colors = ["#FF9999", "#66B2FF", "#99FF99", "#FFCC99"]
+# comprehension 사용으로 연쇄 지연 count
+days = ['dawn', 'morning', 'lunch', 'dinner']
+delay_counts = {time: len(sort_.loc[(sort_['time_of_day'] == time) & 
+                                  (sort_['dep_delay'] >= 15) & 
+                                  (sort_['prev_arr_delay'] >= 15), :]) 
+                for time in days}
 
 # 파이 차트 그리기
 plt.figure(figsize=(7, 7))
-plt.pie(sizes, labels=labels, autopct="%1.1f%%", startangle=90, colors=colors, wedgeprops={"edgecolor": "black"})
+colors = ["#c4b5fd", "#bef264", "#fdba74", "#155e75"]
+plt.pie(delay_counts.values(), 
+        labels=days, 
+        autopct=lambda p: f'{p:.1f}%' if p > 0 else '',
+        startangle=90, 
+        colors=colors, 
+        wedgeprops={"edgecolor": "#52525b"})
 plt.title("cascade delay")
-
+plt.legend(days, title="Time Periods", loc="upper right")
+plt.show()
 
 '''
 결론: 연쇄지연 발생으로인해 항공편이 적음에도 저녁시간대에 비행기 지연이 자주 발생된다.

@@ -1,0 +1,66 @@
+---
+title: "뉴욕 비행장 데이터 분석"
+subtitle: "권서연, 김민채, 박재원, 오상원"
+author: "7조"
+format: 
+  revealjs:
+    highlight-style: gruvbox
+    incremental: true  
+    # logo: logo.png
+    css: styles.css
+    title-slide-attributes: 
+      data-background-image: "assets/title-bg.gif"
+      data-background-size: cover
+    slide-attributes:
+      data-background-image: "assets/bg.png"
+      data-background-size: cover
+jupyter: python3
+---
+
+--- 
+
+## 목차 {data-background-image="assets/bg.png"}
+<div style="padding-left: 3rem !important;">
+
+::: {.incremental}
+1. 데이터 설명  
+2. 분석 목표  
+3. 항공편 지연 분석  
+   - 시간대별  
+   - 계절별  
+   - 날씨별  
+4. 항공기 특성 분석  
+   - 엔진 개수에 따른 특수성  
+   - 생산 년도와 엔진 개수  
+
+:::
+</div>
+
+---
+
+
+## 데이터셋 정보 {data-background-image="assets/bg.png"}
+
+```{python}
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+import pandas as pd
+from nycflights13 import flights, planes, weather
+```
+
+![](https://docs.ropensci.org/dittodb/articles/relational-nycflights.svg)
+
+<div style="margin-top: 1rem; padding-left: 1rem; padding-bottom: 1.6rem;">
+  <li style="font-size: 1.6rem; margin-top: 5px; font-family: Pretendard !important;"> 데이터 구성: 2013년 뉴욕에서 출발한 모든 항공편의 운항 데이터 </li>
+  <li style="font-size: 1.6rem; margin-top: 5px; font-family: Pretendard !important;"> 포함된 정보: 항공사, 공항, 날씨, 항공기 메타데이터 포함 </li>
+  <li style="font-size: 1.6rem; margin-top: 5px; font-family: Pretendard !important;"> 분석 대상: `flights`, `planes`, `weather` 중심 </li>
+</div>
+---
+
+
+## 제목을 입력해주세요 {data-background-image="assets/bg.png"}
+
+
+
