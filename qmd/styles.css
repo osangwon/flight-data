@@ -153,6 +153,10 @@ code span {
   font-size: 16px !important;
 }
 
+.reveal div .sourceCode pre code {
+  max-height: 450px;
+}
+
 .red-color {
   color: #ef4444 !important;
 }

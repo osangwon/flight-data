@@ -268,7 +268,7 @@
 <ul>
 <li class="fragment">병합된 데이터인 <code>mer_dat</code>은 다음과 같은 변수들을 가지고 있습니다.</li>
 </ul>
-<div id="9773421f" class="cell" data-execution_count="2">
+<div id="27094417" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
 RangeIndex: 336776 entries, 0 to 336775
@@ -307,9 +307,9 @@ memory usage: 69.4+ MB</code></pre>
 </div>
 </div>
 </section>
-<section id="비행기-출발-시각에-따른-출발-지연-시간" class="slide level2" data-background-image="assets/bg.png">
-<h2>1. 비행기 출발 시각에 따른 출발 지연 시간</h2>
-<div class="sourceCode" id="cb3" data-code-line-numbers="|2-3|5-6|8-10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="co">#| echo: true</span></span>
+<section id="출발-시각에-따른-출발-지연-시간" class="slide level2" data-background-image="assets/bg.png">
+<h2>1. 출발 시각에 따른 출발 지연 시간</h2>
+<div class="sourceCode" id="cb3" data-code-line-numbers="|2-3|5-6|8-10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a></span>
 <span id="cb3-2"><a href=""></a>mer_dat[<span class="st">'hour'</span>] <span class="op">=</span> mer_dat[<span class="st">'time_hour'</span>].<span class="bu">str</span>.extract(<span class="vs">r'(\d</span><span class="sc">{2}</span><span class="vs">):'</span>).astype(<span class="bu">int</span>)</span>
 <span id="cb3-3"><a href=""></a><span class="bu">set</span>(mer_dat[<span class="st">'hour'</span>]) <span class="co"># 6~8시는 출발하지 않는다. </span></span>
 <span id="cb3-4"><a href=""></a></span>
@@ -337,9 +337,9 @@ memory usage: 69.4+ MB</code></pre>
 <span id="cb3-26"><a href=""></a></span>
 <span id="cb3-27"><a href=""></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="비행기-출발-시각에-따른-출발-지연-시간-1" class="slide level2" data-background-image="assets/bg.png">
-<h2>1. 비행기 출발 시각에 따른 출발 지연 시간</h2>
-<div id="227b9b31" class="cell" data-execution_count="3">
+<section id="출발-시각에-따른-출발-지연-시간-1" class="slide level2" data-background-image="assets/bg.png">
+<h2>1. 출발 시각에 따른 출발 지연 시간</h2>
+<div id="d6ff7051" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -349,7 +349,7 @@ memory usage: 69.4+ MB</code></pre>
 </div>
 </div>
 <ul>
-<li class="fragment">출발 시각이 0시에 가까워 질수록 출발 지연 시간이 길어지는 것을 확인할 수 있다.</li>
+<li class="fragment">출발 시각이 <span class="red-color"> 0시에 </span> 가까워 질수록 출발 지연 시간이 길어짐</li>
 </ul>
 </section>
 <section id="계절별-출발-지연-시간" class="slide level2" data-background-image="assets/bg.png">
@@ -376,7 +376,7 @@ memory usage: 69.4+ MB</code></pre>
 </section>
 <section id="계절별-출발-지연-시간-1" class="slide level2" data-background-image="assets/bg.png">
 <h2>2. 계절별 출발 지연 시간</h2>
-<div id="8a7249eb" class="cell" data-execution_count="4">
+<div id="80456e4f" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -386,12 +386,12 @@ memory usage: 69.4+ MB</code></pre>
 </div>
 </div>
 <ul>
-<li class="fragment">사계절 중 여름이 가장 높은 지연 시간을 가지고, 가을이 가장 낮은 지연 시간을 가진다.</li>
+<li class="fragment"><span class="red-color">여름이</span> 가장 높은 지연 시간을 가지고, <span class="red-color">가을이 </span>가장 낮은 지연 시간을 가진다.</li>
 </ul>
 </section>
 <section id="계절별-출발-지연-시간-2" class="slide level2" data-background-image="assets/bg.png">
 <h2>2. 계절별 출발 지연 시간</h2>
-<div id="0a76f234" class="cell" data-execution_count="5">
+<div id="b6bb4d61" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -407,7 +407,7 @@ memory usage: 69.4+ MB</code></pre>
 </section>
 <section id="계절별-출발-지연-시간-3" class="slide level2" data-background-image="assets/bg.png">
 <h2>2. 계절별 출발 지연 시간</h2>
-<div id="4360d3e4" class="cell" data-execution_count="6">
+<div id="0ec7bd38" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -423,7 +423,7 @@ memory usage: 69.4+ MB</code></pre>
 </section>
 <section id="계절별-출발-지연-시간-4" class="slide level2" data-background-image="assets/bg.png">
 <h2>2. 계절별 출발 지연 시간</h2>
-<div id="e7e1d933" class="cell" data-execution_count="7">
+<div id="6b407ae5" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -456,7 +456,7 @@ memory usage: 69.4+ MB</code></pre>
 </section>
 <section id="비행기-제작-연도별-출발-지연-시간-1" class="slide level2" data-background-image="assets/bg.png">
 <h2>3. 비행기 제작 연도별 출발 지연 시간</h2>
-<div id="966d96ec" class="cell" data-execution_count="8">
+<div id="dc1d77c4" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -490,7 +490,7 @@ memory usage: 69.4+ MB</code></pre>
 </section>
 <section id="비행기-엔진-종류-별-속도-분석-1" class="slide level2" data-background-image="assets/bg.png">
 <h2>4. 비행기 엔진 종류 별 속도 분석</h2>
-<div id="fd29e393" class="cell" data-execution_count="9">
+<div id="8f190d49" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
